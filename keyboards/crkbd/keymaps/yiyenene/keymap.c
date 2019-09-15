@@ -170,8 +170,8 @@ void set_kana(void){
   type_code(KC_LANG1);
 }
 
-static bool pressed[1];
-static uint16_t pressed_time[1];
+static bool pressed[2];
+static uint16_t pressed_time[2];
 
 void record_pressed(uint8_t index, keyrecord_t *record) {
   pressed[index] = true;
@@ -179,7 +179,7 @@ void record_pressed(uint8_t index, keyrecord_t *record) {
 }
 
 void process_if_tap(uint8_t index, keyrecord_t *record, void (*cb)(void)) {
-  if (pressed[index] && (TIMER_DIFF_16(record->event.time, pressed_time[index]) < TAPPING_TERM)) {
+  if (pressed[index] && (TIMER_DIFF_16(record->event.time, pressed_time[index]) < (TAPPING_TERM + 100))) {
     cb();
   }
   pressed[index] = false;
